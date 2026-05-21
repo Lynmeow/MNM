@@ -1,0 +1,11 @@
+<div th:if="${session.vaiTro == 'ADMIN'}">
+    <h1>Chào mừng Admin</h1>
+    <a href="/admin/sanpham">Quản lý sản phẩm</a>
+    <a href="/admin/user">Quản lý người dùng</a>
+    <a href="/logout">Đăng xuất</a>
+</div>
+
+<!-- Nếu không phải Admin, chuyển hướng về trang đăng nhập -->
+<div th:if="${session.vaiTro != 'ADMIN'}">
+    <p>Bạn không có quyền truy cập trang này.</p>
+</div>

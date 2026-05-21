@@ -1,0 +1,328 @@
+/* ===== STRAWBERRY MILK THEME ===== */
+:root {
+    --primary-pink: #FFB3C6;
+    --light-pink: #FFC9D9;
+    --soft-pink: #FFE5ED;
+    --cream: #FFF5F7;
+    --dark-pink: #FF8FAB;
+    --accent-pink: #FF6B9D;
+    --text-dark: #4A4A4A;
+    --text-light: #666666;
+    --white: #FFFFFF;
+    --shadow: rgba(255, 107, 157, 0.15);
+}
+
+/* General styling for the body */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--cream) 0%, var(--soft-pink) 100%);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container wrapper */
+body > * {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--accent-pink) 100%);
+    color: var(--white);
+    margin: 0 0 30px 0;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px var(--shadow);
+    letter-spacing: 0.5px;
+}
+
+/* Access Denied Message */
+div p {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    color: var(--accent-pink);
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* Button & Link Styling */
+button, a.btn-add, form a {
+    display: inline-block;
+    padding: 12px 28px;
+    margin: 10px 5px;
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--dark-pink) 100%);
+    color: var(--white);
+    text-align: center;
+    text-decoration: none;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+button:hover, a.btn-add:hover, form a:hover {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--primary-pink) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+a.btn-add {
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px var(--shadow);
+}
+
+th, td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--soft-pink);
+}
+
+th {
+    background: linear-gradient(135deg, var(--primary-pink) 0%, var(--dark-pink) 100%);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: var(--white);
+    color: var(--text-light);
+    font-size: 15px;
+}
+
+tbody tr {
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background-color: var(--soft-pink);
+    transform: scale(1.01);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+td img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--light-pink);
+    transition: transform 0.3s ease;
+}
+
+td img:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* Action Links in Table */
+td a {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 2px;
+    background: var(--primary-pink);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+td a:hover {
+    background: var(--accent-pink);
+    transform: translateY(-1px);
+}
+
+td a:last-child {
+    background: linear-gradient(135deg, #FFB3C6 0%, #FF8FAB 100%);
+}
+
+td a:last-child:hover {
+    background: linear-gradient(135deg, #FF8FAB 0%, #FF6B9D 100%);
+}
+
+/* Form Styling */
+form {
+    background: var(--white);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px var(--shadow);
+    margin-top: 20px;
+}
+
+form label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--text-dark);
+    font-size: 15px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border: 2px solid var(--light-pink);
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: var(--cream);
+    color: var(--text-dark);
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form textarea:focus,
+form select:focus {
+    outline: none;
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+    background: var(--white);
+}
+
+form textarea {
+    height: 120px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+form input[type="file"] {
+    padding: 12px 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+form input[type="file"]::file-selector-button {
+    padding: 10px 20px;
+    background: var(--primary-pink);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+}
+
+form input[type="file"]::file-selector-button:hover {
+    background: var(--accent-pink);
+}
+
+form img {
+    margin: 15px 0;
+    border-radius: 12px;
+    border: 3px solid var(--light-pink);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+form button[type="submit"] {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    margin-right: 10px;
+}
+
+form a {
+    background: linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%);
+    color: var(--text-dark);
+}
+
+form a:hover {
+    background: linear-gradient(135deg, #BDBDBD 0%, #9E9E9E 100%);
+}
+
+/* Hidden input styling */
+input[type="hidden"] {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        font-size: 13px;
+        display: block;
+        overflow-x: auto;
+    }
+
+    th, td {
+        padding: 12px 10px;
+        white-space: nowrap;
+    }
+
+    form {
+        padding: 25px 20px;
+    }
+
+    button, a.btn-add, form a {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    td img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+        padding: 15px 10px;
+    }
+
+    form {
+        padding: 20px 15px;
+    }
+
+    button, a.btn-add, form a {
+        padding: 8px 16px;
+        font-size: 13px;
+        display: block;
+        margin: 10px 0;
+    }
+}

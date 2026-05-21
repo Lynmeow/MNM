@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập / Đăng ký - XYNH COSMETIC</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-body">
+
+<div class="auth-container">
+
+    <!-- TAB HEADER -->
+    <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active" onclick="showLogin()">Đăng nhập</button>
+        <button id="tab-register" class="auth-tab" onclick="showRegister()">Đăng ký</button>
+    </div>
+
+    <!-- FORM ĐĂNG NHẬP -->
+    <div id="login-box" class="auth-box">
+        <h2>Đăng nhập</h2>
+
+        <!-- Thông báo lỗi / thành công -->
+        <p class="auth-message error" th:if="${loginError}" th:text="${loginError}"></p>
+        <p class="auth-message success" th:if="${registerSuccess}" th:text="${registerSuccess}"></p>
+
+        <form th:action="@{/dangnhap}" method="post" class="auth-form">
+            <label for="tenDangNhap">Tên đăng nhập</label>
+            <input type="text" id="tenDangNhap" name="tenDangNhap" required>
+
+            <label for="matKhau">Mật khẩu</label>
+            <input type="password" id="matKhau" name="matKhau" required>
+
+            <button type="submit" class="auth-btn">Đăng nhập</button>
+        </form>
+
+        <p class="auth-switch">
+            Bạn chưa có tài khoản?
+            <a href="javascript:void(0)" onclick="showRegister()">Tạo tài khoản ngay</a>
+        </p>
+    </div>
+
+    <!-- FORM ĐĂNG KÝ -->
+    <div id="register-box" class="auth-box hidden">
+        <h2>Tạo tài khoản mới</h2>
+
+        <p class="auth-message error" th:if="${registerError}" th:text="${registerError}"></p>
+
+        <form th:action="@{/dangky}" method="post" class="auth-form">
+            <label for="tk-username">Tên đăng nhập</label>
+            <input type="text" id="tk-username" name="tenDangNhap" required>
+
+            <label for="tk-email">Email</label>
+            <input type="email" id="tk-email" name="email" required>
+
+            <label for="tk-password">Mật khẩu</label>
+            <input type="password" id="tk-password" name="matKhau" required>
+
+            <button type="submit" class="auth-btn">Đăng ký</button>
+        </form>
+
+        <p class="auth-switch">
+            Đã có tài khoản?
+            <a href="javascript:void(0)" onclick="showLogin()">Quay lại đăng nhập</a>
+        </p>
+    </div>
+
+</div>
+
+<!-- JavaScript để chuyển đổi giữa Đăng nhập và Đăng ký -->
+<script th:inline="javascript">
+    function showLogin() {
+        document.getElementById('login-box').classList.remove('hidden');
+        document.getElementById('register-box').classList.add('hidden');
+        document.getElementById('tab-login').classList.add('active');
+        document.getElementById('tab-register').classList.remove('active');
+    }
+
+    function showRegister() {
+        document.getElementById('login-box').classList.add('hidden');
+        document.getElementById('register-box').classList.remove('hidden');
+        document.getElementById('tab-login').classList.remove('active');
+        document.getElementById('tab-register').classList.add('active');
+    }
+
+    // Tự động chuyển tab khi có lỗi đăng ký
+    var hasRegisterError = /*[[${registerError != null}]]*/ false;
+    if (hasRegisterError) {
+        showRegister();
+    }
+</script>
+
+</body>
+</html>

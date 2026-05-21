@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý đơn hàng</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --pink-primary: #FFE4F0;
+        --pink-secondary: #FFD6E8;
+        --pink-accent: #FFC1DC;
+        --pink-dark: #E6B8CC;
+        --text-dark: #4A4A4A;
+        --sidebar-bg: #2C3E50;
+    }
+    
+    body {
+        background-color: #F8F9FA;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .sidebar {
+        min-height: 100vh;
+        background: linear-gradient(180deg, #FFD6E8 0%, #FFC1DC 100%);
+        position: fixed;
+        width: 250px;
+        padding: 0;
+        box-shadow: 2px 0 10px rgba(255, 193, 220, 0.2);
+    }
+    
+    .sidebar-header {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .sidebar h4 {
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin: 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sidebar hr {
+        border-color: rgba(255, 255, 255, 0.3);
+        margin: 15px 0;
+    }
+    
+    .sidebar a {
+        color: rgba(255, 255, 255, 0.95);
+        text-decoration: none;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    
+    .sidebar a i {
+        margin-right: 12px;
+        width: 20px;
+        text-align: center;
+    }
+    
+    .sidebar a:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        color: #fff;
+        padding-left: 25px;
+    }
+    
+    .sidebar a.active {
+        background-color: rgba(255, 255, 255, 0.35);
+        color: #fff;
+        border-left: 4px solid #fff;
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    
+    .main-wrapper {
+        margin-left: 250px;
+        padding: 0;
+    }
+    
+    .main-content {
+        background: #fff;
+        min-height: 100vh;
+        padding: 30px 40px;
+    }
+    
+    .page-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #E9ECEF;
+    }
+    
+    .page-header h2 {
+        color: var(--text-dark);
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .page-header i {
+        margin-right: 12px;
+        color: var(--pink-accent);
+    }
+    
+    .filter-section {
+        background: var(--pink-primary);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+    
+    .form-select {
+        border: 1px solid var(--pink-dark);
+        border-radius: 6px;
+        padding: 8px 12px;
+        background-color: #fff;
+        font-size: 0.9rem;
+    }
+    
+    .form-select:focus {
+        border-color: var(--pink-accent);
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 220, 0.25);
+        outline: none;
+    }
+    
+    .btn-filter {
+        background-color: #3498DB;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-filter:hover {
+        background-color: #2980B9;
+        transform: translateY(-1px);
+    }
+    
+    .total-badge {
+        background-color: var(--pink-secondary);
+        color: var(--text-dark);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .table-container {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #E9ECEF;
+    }
+    
+    .table {
+        margin: 0;
+    }
+    
+    .table thead {
+        background-color: var(--sidebar-bg);
+    }
+    
+    .table thead th {
+        color: #fff;
+        font-weight: 500;
+        border: none;
+        padding: 15px 12px;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .table tbody td {
+        padding: 14px 12px;
+        vertical-align: middle;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+        border-bottom: 1px solid #F1F3F5;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #F8F9FA;
+    }
+    
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .badge-status {
+        padding: 6px 14px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .badge.bg-warning {
+        background-color: #F39C12 !important;
+        color: #fff;
+    }
+    
+    .badge.bg-info {
+        background-color: #3498DB !important;
+        color: #fff;
+    }
+    
+    .badge.bg-success {
+        background-color: #27AE60 !important;
+        color: #fff;
+    }
+    
+    .badge.bg-danger {
+        background-color: #E74C3C !important;
+        color: #fff;
+    }
+    
+    .btn-action {
+        padding: 6px 12px;
+        border-radius: 5px;
+        border: none;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        margin: 0 2px;
+    }
+    
+    .btn-action.btn-info {
+        background-color: #3498DB;
+        color: #fff;
+    }
+    
+    .btn-action.btn-info:hover {
+        background-color: #2980B9;
+        transform: translateY(-2px);
+    }
+    
+    .btn-action.btn-danger {
+        background-color: #E74C3C;
+        color: #fff;
+    }
+    
+    .btn-action.btn-danger:hover {
+        background-color: #C0392B;
+        transform: translateY(-2px);
+    }
+    
+    .text-danger {
+        color: #E74C3C !important;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+    
+    .empty-state i {
+        color: var(--pink-dark);
+        opacity: 0.4;
+        margin-bottom: 15px;
+    }
+    
+    .empty-state p {
+        color: #95A5A6;
+        font-size: 1rem;
+        margin: 0;
+    }
+</style>
+</head>
+<body>
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h4>Quản Lý</h4>
+                <hr>
+            </div>
+            <div>
+                <a href="/admin/sanpham">
+                    <i class="fas fa-box"></i>
+                    <span>Quản lý sản phẩm</span>
+                </a>
+                <a href="/admin/donhang" class="active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Quản lý đơn hàng</span>
+                </a>
+                <a href="/logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <div class="main-content">
+                <div class="page-header">
+                    <h2>
+                        <i class="fas fa-shopping-cart"></i>
+                        Quản lý đơn hàng
+                    </h2>
+                </div>
+                <!-- Thêm vào đầu trang, trước bộ lọc -->
+<div style="margin-bottom: 20px;">
+    <a href="/admin/donhang/add" style="
+        background: #ff69b4;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: bold;
+    ">
+        + Tạo đơn hàng mới
+    </a>
+</div>
+                
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <form th:action="@{/admin/donhang/filter}" method="get">
+                                <div class="input-group">
+                                    <select name="trangThai" class="form-select">
+                                        <option value="">Tất cả trạng thái</option>
+                                        <option value="Chờ xác nhận" th:selected="${selectedTrangThai == 'Chờ xác nhận'}">Chờ xác nhận</option>
+                                        <option value="Đang giao" th:selected="${selectedTrangThai == 'Đang giao'}">Đang giao</option>
+                                        <option value="Hoàn thành" th:selected="${selectedTrangThai == 'Hoàn thành'}">Hoàn thành</option>
+                                        <option value="Đã hủy" th:selected="${selectedTrangThai == 'Đã hủy'}">Đá hủy</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-filter">
+                                        <i class="fas fa-filter"></i> Lọc
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <span class="total-badge">
+                                Tổng: <strong><span th:text="${donHangs.size()}">0</span> đơn hàng</strong>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã ĐH</th>
+                                <th>Khách hàng ID</th>
+                                <th>Địa chỉ</th>
+                                <th>Ngày đặt</th>
+                                <th>Tổng tiền</th>
+                                <th>Giảm giá</th>
+                                <th>Thanh toán</th>
+                                <th>PT Thanh toán</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="dh : ${donHangs}">
+                                <td><strong th:text="${dh.id}"></strong></td>
+                                <td th:text="${dh.userId}"></td>
+                                <td th:text="${dh.diaChi}"></td>
+                                <td th:text="${#dates.format(dh.ngayTao, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${#numbers.formatDecimal(dh.tongTien, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+                                <td th:text="${#numbers.formatDecimal(dh.giamGia, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+                                <td class="text-danger fw-bold" th:text="${#numbers.formatDecimal(dh.thanhToan, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+                                <td>
+                                    <span class="badge bg-info" th:text="${dh.phuongThucThanhToan}"></span>
+                                </td>
+                                <td>
+                                    <span th:class="${dh.trangThai == 'Chờ xác nhận' ? 'badge bg-warning badge-status' : 
+                                                    (dh.trangThai == 'Đang giao' ? 'badge bg-info badge-status' : 
+                                                    (dh.trangThai == 'Hoàn thành' ? 'badge bg-success badge-status' : 'badge bg-danger badge-status'))}"
+                                            th:text="${dh.trangThai}"></span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/donhang/detail/{id}(id=${dh.id})}" 
+                                        class="btn-action btn-info" 
+                                        title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <form th:action="@{/admin/donhang/delete/{id}(id=${dh.id})}" method="post"
+                                          style="display:inline;"
+                                          onsubmit="return confirm('Bạn có chắc muốn xóa đơn hàng này?')">
+                                        <button type="submit" class="btn-action btn-danger" title="Xóa đơn hàng">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <!-- Empty State -->
+                            <tr th:if="${donHangs.empty}">
+                                <td colspan="10" class="empty-state">
+                                    <i class="fas fa-inbox fa-4x"></i>
+                                    <p>Chưa có đơn hàng nào</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

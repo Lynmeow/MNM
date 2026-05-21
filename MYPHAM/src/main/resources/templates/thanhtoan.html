@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận thông tin đơn hàng</title>
+    <link rel="stylesheet" th:href="@{/css/thanhtoan.css}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Trang Chủ</a></li>
+            <li><a href="/sanpham/danhsach">Sản phẩm</a></li>
+            <li><a href="/giohang">Giỏ hàng</a></li>
+            <li><a href="/lienhe">Liên hệ</a></li>
+        </ul>
+    </nav>
+
+    <!-- Container chính -->
+    <div class="container">
+        <!-- Tiêu đề -->
+        <h1 class="page-title">Xác nhận thông tin đơn hàng</h1>
+
+        <!-- Thông tin giỏ hàng -->
+        <div class="giohang">
+            <h2>Chi tiết đơn hàng</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="ct : ${giohang}">
+                        <td class="product-image">
+                            <img th:src="@{'/anh/' + ${ct.sanPham.hinhAnh}}" 
+                                 th:alt="${ct.sanPham.tenSP}"
+                                 onerror="this.src='/anh/default.jpg'">
+                        </td>
+                        <td class="product-name" th:text="${ct.sanPham.tenSP}">Tên sản phẩm</td>
+                        <td th:text="${ct.soLuong}">1</td>
+                        <td class="price" th:text="${#numbers.formatDecimal(ct.sanPham.gia, 0, 'COMMA', 0, 'POINT')}">100,000</td>
+                        <td class="price" th:text="${#numbers.formatDecimal(ct.sanPham.gia * ct.soLuong, 0, 'COMMA', 0, 'POINT')}">100,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Form thanh toán -->
+        <form action="/thanhtoan/taodon" method="post" class="payment-form">
+            
+            <!-- Mã giảm giá -->
+            <div class="discount-section">
+                <h3>Mã giảm giá</h3>
+                <div class="discount-input-group">
+                    <input type="text" id="maKM" name="maKM" placeholder="Nhập mã giảm giá">
+                    <button type="button" class="btn-apply" onclick="applyDiscount()">Áp dụng</button>
+                </div>
+                <div id="discount-message" class="discount-message"></div>
+            </div>
+
+            <!-- Tổng tiền -->
+            <div class="tong-tien">
+                <div class="tong-tien-row">
+                    <span>Tạm tính:</span>
+                    <span class="price" th:text="${#numbers.formatDecimal(tongTien, 0, 'COMMA', 0, 'POINT')} + ' VND'">1,000,000 VND</span>
+                </div>
+                <div class="tong-tien-row discount-row" th:if="${tongTienSauGiam != null}">
+                    <span>Giảm giá:</span>
+                    <span class="discount-amount" th:text="'-' + ${#numbers.formatDecimal(tongTien - tongTienSauGiam, 0, 'COMMA', 0, 'POINT')} + ' VND'">-100,000 VND</span>
+                </div>
+                <div class="tong-tien-row total-row">
+                    <span><strong>Tổng cộng:</strong></span>
+                    <span class="price total-price">
+                        <strong th:text="${tongTienSauGiam != null ? #numbers.formatDecimal(tongTienSauGiam, 0, 'COMMA', 0, 'POINT') : #numbers.formatDecimal(tongTien, 0, 'COMMA', 0, 'POINT')} + ' VND'">1,000,000 VND</strong>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Thông tin giao hàng -->
+            <div class="shipping-section">
+                <h3>Thông tin giao hàng</h3>
+                
+                <div class="input-group">
+                    <label for="hoTen">Họ và tên: <span class="required">*</span></label>
+                    <input type="text" id="hoTen" name="hoTen" required placeholder="Nhập họ và tên người nhận">
+                </div>
+
+                <div class="input-group">
+                    <label for="soDienThoai">Số điện thoại: <span class="required">*</span></label>
+                    <input type="tel" id="soDienThoai" name="soDienThoai" required 
+                           placeholder="Nhập số điện thoại" 
+                           pattern="[0-9]{10,11}">
+                </div>
+
+                <div class="input-group">
+                    <label for="diaChi">Địa chỉ nhận hàng: <span class="required">*</span></label>
+                    <textarea id="diaChi" name="diaChi" required 
+                              placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                              rows="3"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="ghiChu">Ghi chú đơn hàng:</label>
+                    <textarea id="ghiChu" name="ghiChu" 
+                              placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn"
+                              rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- Phương thức thanh toán -->
+            <div class="payment-method-section">
+                <h3>Phương thức thanh toán</h3>
+                
+                <div class="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="phuongThuc" value="Thanh toán khi nhận hàng" checked>
+                        <div class="payment-option-content">
+                            <span class="payment-icon">💵</span>
+                            <div>
+                                <strong>Thanh toán khi nhận hàng (COD)</strong>
+                                <p>Thanh toán bằng tiền mặt khi nhận hàng</p>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="phuongThuc" value="Thanh toán qua thẻ">
+                        <div class="payment-option-content">
+                            <span class="payment-icon">💳</span>
+                            <div>
+                                <strong>Thanh toán qua thẻ</strong>
+                                <p>Visa, Master Card, JCB</p>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="phuongThuc" value="Ngân hàng điện tử">
+                        <div class="payment-option-content">
+                            <span class="payment-icon">🏦</span>
+                            <div>
+                                <strong>Ngân hàng điện tử</strong>
+                                <p>Chuyển khoản qua Internet Banking</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Nút hành động -->
+            <div class="action-buttons">
+                <a href="/giohang" class="btn-back">← Quay lại giỏ hàng</a>
+                <button type="submit" class="btn-submit">Xác nhận đặt hàng</button>
+            </div>
+        </form>
+    </div>
+
+    <script th:src="@{/js/thanhtoan.js}"></script>
+</body>
+</html>

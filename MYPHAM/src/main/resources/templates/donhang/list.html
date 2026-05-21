@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đơn hàng của tôi</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ffb3d9 0%, #ff85c0 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #ff69b4;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #666;
+    font-size: 16px;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: 2px solid #ff85c0;
+    background: white;
+    color: #ff69b4;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.tab:hover, .tab.active {
+    background: linear-gradient(135deg, #ff85c0 0%, #ffb3d9 100%);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 133, 192, 0.3);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #fff0f6;
+    margin-bottom: 15px;
+}
+
+.order-id {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ff69b4;
+}
+
+.order-date {
+    color: #999;
+    font-size: 14px;
+}
+
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pending {
+    background: #fff4e6;
+    color: #ff9800;
+}
+
+.status-processing {
+    background: #e3f2fd;
+    color: #2196f3;
+}
+
+.status-shipping {
+    background: #f3e5f5;
+    color: #9c27b0;
+}
+
+.status-completed {
+    background: #e8f5e9;
+    color: #4caf50;
+}
+
+.status-cancelled {
+    background: #ffebee;
+    color: #f44336;
+}
+
+.order-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-label {
+    color: #999;
+    font-size: 13px;
+}
+
+.info-value {
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.order-total {
+    font-size: 20px;
+    color: #ff69b4;
+    font-weight: 700;
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #fff0f6;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-detail {
+    background: linear-gradient(135deg, #ff85c0 0%, #ffb3d9 100%);
+    color: white;
+}
+
+.btn-detail:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 133, 192, 0.4);
+}
+
+.btn-cancel {
+    background: white;
+    color: #f44336;
+    border: 2px solid #f44336;
+}
+
+.btn-cancel:hover {
+    background: #f44336;
+    color: white;
+}
+
+.btn-reorder {
+    background: white;
+    color: #ff69b4;
+    border: 2px solid #ff85c0;
+}
+
+.btn-reorder:hover {
+    background: #ff85c0;
+    color: white;
+}
+
+.empty-state {
+    background: white;
+    border-radius: 15px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state svg {
+    width: 100px;
+    height: 100px;
+    color: #ffb3d9;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #999;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .order-info {
+        grid-template-columns: 1fr;
+    }
+
+    .order-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+    <h1>Đơn hàng của tôi</h1>
+    <p>Theo dõi và quản lý các đơn hàng bạn đã đặt</p>
+    
+    <div class="filter-tabs">
+        <button class="tab active" onclick="filterOrders('all')">Tất cả</button>
+        <button class="tab" onclick="filterOrders('Chờ xác nhận')">Chờ xác nhận</button>
+        <button class="tab" onclick="filterOrders('Đang xử lý')">Đang xử lý</button>
+        <button class="tab" onclick="filterOrders('Đang giao')">Đang giao</button>
+        <button class="tab" onclick="filterOrders('Hoàn thành')">Hoàn thành</button>
+        <button class="tab" onclick="filterOrders('Đã hủy')">Đã hủy</button>
+    </div>
+</div>
+
+<div class="orders-list">
+    <!-- Kiểm tra nếu có đơn hàng -->
+    <div th:if="${donHangs != null and !donHangs.isEmpty()}">
+        <div class="order-card" th:each="dh : ${donHangs}" th:data-status="${dh.trangThai}">
+            <div class="order-header">
+                <div>
+                    <div class="order-id">Đơn hàng #<span th:text="${dh.id}">123456</span></div>
+                    <div class="order-date" th:text="${#dates.format(dh.ngayTao, 'dd/MM/yyyy HH:mm')}">15/12/2024 14:30</div>
+                </div>
+                <span class="status-badge"
+                        th:classappend="${dh.trangThai == 'Chờ xác nhận' ? 'status-pending' : 
+                                        dh.trangThai == 'Đang xử lý' ? 'status-processing' : 
+                                        dh.trangThai == 'Đang giao' ? 'status-shipping' : 
+                                        dh.trangThai == 'Hoàn thành' ? 'status-completed' : 
+                                        'status-cancelled'}"
+                        th:text="${dh.trangThai}">Đang xử lý</span>
+            </div>
+
+            <div class="order-info">
+                <div class="info-item">
+                    <span class="info-label">Địa chỉ giao hàng</span>
+                    <span class="info-value" th:text="${dh.diaChi}">123 Nguyễn Văn A, Q1, TP.HCM</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phương thức thanh toán</span>
+                    <span class="info-value" th:text="${dh.phuongThucThanhToan}">COD</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Tổng tiền</span>
+                    <span class="info-value" th:text="${#numbers.formatDecimal(dh.tongTien, 0, 'COMMA', 0, 'POINT')} + ' đ'">1.500.000 đ</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Thành tiền</span>
+                    <span class="info-value order-total" th:text="${#numbers.formatDecimal(dh.thanhToan, 0, 'COMMA', 0, 'POINT')} + ' đ'">1.400.000 đ</span>
+                </div>
+            </div>
+
+            <div class="order-actions">
+                <a th:href="@{/donhang/detail/{id}(id=${dh.id})}" class="btn btn-detail">Xem chi tiết</a>
+                <button class="btn btn-cancel" th:if="${dh.trangThai == 'Chờ xác nhận'}" 
+                        th:onclick="'cancelOrder(' + ${dh.id} + ')'">Hủy đơn</button>
+                <button class="btn btn-reorder" th:if="${dh.trangThai == 'Hoàn thành'}">Mua lại</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hiển thị khi không có đơn hàng -->
+    <div class="empty-state" th:if="${donHangs == null or donHangs.isEmpty()}">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <h3>Chưa có đơn hàng nào</h3>
+        <p>Bạn chưa đặt đơn hàng nào. Hãy khám phá và mua sắm ngay!</p>
+        <a href="/" class="btn btn-detail">Về trang chủ</a>
+    </div>
+</div>
+</div>
+
+<script>
+function filterOrders(status) {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const orders = document.querySelectorAll('.order-card');
+    orders.forEach(order => {
+        if (status === 'all' || order.dataset.status === status) {
+            order.style.display = 'block';
+        } else {
+            order.style.display = 'none';
+        }
+    });
+}
+
+function cancelOrder(orderId) {
+if (!confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) return;
+
+fetch(`/donhang/cancel/${orderId}`, { method: 'POST' })
+.then(async (res) => {
+    // nếu server trả lỗi, vẫn đọc message
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.message || 'Hủy thất bại');
+    return data;
+})
+.then(data => {
+    alert('Hủy đơn hàng thành công!');
+    location.reload();
+})
+.catch(err => {
+    alert(err.message);
+});
+}
+</script>
+</body>
+</html>

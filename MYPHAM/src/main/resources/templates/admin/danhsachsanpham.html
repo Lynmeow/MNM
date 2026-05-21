@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danh Sách Sản Phẩm</title>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div th:if="${session.vaiTro != 'ADMIN'}">
+    <p>Bạn không có quyền truy cập trang này.</p>
+</div>
+
+<h1>Danh Sách Sản Phẩm</h1>
+
+<!-- Nút Thêm sản phẩm -->
+<a th:href="@{/admin/sanpham/add}" class="btn-add">Thêm Sản Phẩm Mới</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Danh Mục</th>
+            <th>Mã Sản Phẩm</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Giá</th>
+            <th>Mô Tả</th>
+            <th>Hình Ảnh</th>
+            <th>Thao Tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="sanPham : ${sanPhams}">
+            <td th:text="${sanPham.danhmuc != null ? sanPham.danhmuc.tenDM : 'Chưa phân loại'}"></td>
+            <td th:text="${sanPham.maSP}"></td>
+            <td th:text="${sanPham.tenSP}"></td>
+            <td th:text="${sanPham.gia}"></td>
+            <td th:text="${sanPham.mota}"></td>
+            <td>
+                <img th:src="@{'/anh/' + ${sanPham.hinhAnh}}" alt="Product Image" width="50" height="50"/>
+            </td>
+            <td>
+                <a th:href="@{/admin/sanpham/edit/{maSP}(maSP=${sanPham.maSP})}">Sửa</a>
+                <form th:action="@{/admin/sanpham/delete/{maSP}(maSP=${sanPham.maSP})}" method="post"
+                      style="display:inline;"
+                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                    <button type="submit" style="background:none;border:none;color:red;cursor:pointer;padding:0;">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

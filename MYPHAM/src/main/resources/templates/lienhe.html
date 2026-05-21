@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ - XYNH Cosmetic</title>
+    <link rel="stylesheet" href="/css/lienhe.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/">Trang Chủ</a></li>
+            <li><a href="/sanpham/danhsach">Sản phẩm</a></li>
+            <li><a href="/gioithieu">Giới thiệu</a></li>
+            <li><a href="/lienhe" class="active">Liên hệ</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===================== CONTAINER CHÍNH ===================== -->
+    <div class="main-container">
+        
+        <!-- ===================== THÔNG TIN LIÊN HỆ ===================== -->
+        <section class="contact-info">
+            <h2>Thông Tin Liên Hệ</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Địa chỉ</h3>
+                        <p>9/24 Kênh 19/5<br>Quận Tân Phú, TP.HCM</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Điện thoại</h3>
+                        <p>0123 456 789<br>0987 654 321</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email</h3>
+                        <p>contact@xynh.vn<br>support@xynh.vn</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Giờ làm việc</h3>
+                        <p>Thứ 2 - Thứ 7: 8:00 - 20:00<br>Chủ nhật: 9:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== FORM LIÊN HỆ ===================== -->
+        <section class="contact-form">
+            <h2>Gửi Tin Nhắn Cho XYNH</h2>
+            <p class="form-subtitle">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
+            
+            <form id="contactForm" action="#" onsubmit="submitContact(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i> Họ và tên <span class="required">*</span>
+                        </label>
+                        <input type="text" id="name" name="name" placeholder="Nhập họ và tên của bạn" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">
+                            <i class="fas fa-phone"></i> Số điện thoại <span class="required">*</span>
+                        </label>
+                        <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Địa chỉ email <span class="required">*</span>
+                    </label>
+                    <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email của bạn" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">
+                        <i class="fas fa-tag"></i> Chủ đề
+                    </label>
+                    <input type="text" id="subject" name="subject" placeholder="Chủ đề câu hỏi">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">
+                        <i class="fas fa-comment-dots"></i> Nội dung <span class="required">*</span>
+                    </label>
+                    <textarea id="message" name="message" rows="6" placeholder="Nhập nội dung câu hỏi của bạn..." required></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                    </button>
+                    <button type="button" class="btn-call" onclick="window.location.href='tel:0123456789'">
+                        <i class="fas fa-phone-volume"></i> Gọi ngay
+                    </button>
+                </div>
+            </form>
+        </section>
+
+    </div>
+
+    <script>
+        function submitContact(e) {
+            e.preventDefault();
+            const form = document.getElementById('contactForm');
+            form.innerHTML = '<p style="color:#27ae60;font-size:1.1rem;text-align:center;padding:30px;">Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>';
+        }
+    </script>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>XYNH Cosmetic</h3>
+                <p>Làm đẹp tự nhiên - Tỏa sáng rạng ngời</p>
+            </div>
+            <div class="footer-section">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><a href="/sanpham/danhsach">Sản phẩm</a></li>
+                    <li><a href="/gioithieu">Giới thiệu</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Kết nối với chúng tôi</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 XYNH Cosmetic. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

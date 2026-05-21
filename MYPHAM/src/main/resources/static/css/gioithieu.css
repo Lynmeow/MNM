@@ -1,0 +1,179 @@
+/* Tổng thể */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #dd5c89; 
+    color: #333;
+}
+
+/* Section giới thiệu */
+.gioithieu {
+    background-color: #ffb4ce; /* Màu nền sáng nhẹ */
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Tiêu đề */
+h1 {
+    font-size: 2.5em;
+    color: #154c4c; /* Màu hồng cánh sen */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Mô tả */
+p {
+    font-size: 1.2em;
+    text-align: center;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+/* Carousel container */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-item {
+    min-width: 20%; /* 5 cột, mỗi cột chiếm 1/5 chiều rộng */
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item p {
+    margin-top: 10px;
+    font-size: 1.1em;
+    color: #333;
+}
+
+/* Hiệu ứng hover cho hình ảnh */
+.carousel-item:hover img {
+    transform: scale(1.05); /* Tăng kích thước ảnh khi di chuột */
+}
+
+.carousel-item:hover {
+    transform: scale(1.05); /* Tăng kích thước cả phần tử khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng để tạo hiệu ứng 3D */
+}
+
+/* Nút điều khiển */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 2em;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+/* Hiệu ứng hover cho nút */
+.prev-btn:hover, .next-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive design cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .carousel-item {
+        min-width: 100%; /* Một cột cho màn hình nhỏ */
+    }
+    /* Footer */
+.footer {
+    background-color: #2C2C2C; /* Màu nền tối */
+    color: white;
+    padding: 40px 20px;
+    margin-top: 40px;
+    text-align: center; /* Căn giữa tất cả văn bản trong footer */
+}
+
+
+.footer-container {
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+    flex-wrap: wrap; /* Cho phép các phần tử bên trong đổi dòng trên màn hình nhỏ */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-item {
+    width: 100%; /* Chiếm toàn bộ chiều rộng của container */
+    text-align: center; /* Căn giữa tất cả nội dung */
+    margin-bottom: 20px;
+    
+    text-align: center; 
+}
+
+
+.footer-item p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #f1f1f1; /* Màu trắng cho văn bản */
+}
+
+.footer-item a {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+.footer-item a:hover {
+    text-decoration: underline;
+}
+
+/* Footer bottom */
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+/* Responsive design cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-item {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+}

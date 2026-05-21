@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giới thiệu - XYNH Cosmetic</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ffd6e8 0%, #ffe0ec 100%);
+    color: #4a4a4a;
+    line-height: 1.6;
+}
+
+/* Header Section */
+.hero {
+    background: linear-gradient(rgba(255, 182, 193, 0.3), rgba(255, 192, 203, 0.5)), 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path fill="%23ffb6c1" d="M0,300 Q300,100 600,300 T1200,300 L1200,600 L0,600 Z"/></svg>') center/cover;
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,182,193,0.1) 0%, transparent 70%);
+    animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.3; }
+}
+
+.hero h1 {
+    font-size: 3em;
+    color: #d5006d;
+    text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.5);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero p {
+    font-size: 1.3em;
+    color: #8b0045;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Container */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* Carousel Section */
+.carousel-section {
+    background: #fff;
+    border-radius: 30px;
+    padding: 60px 40px;
+    box-shadow: 0 15px 40px rgba(213, 0, 109, 0.15);
+    position: relative;
+}
+
+.section-title {
+    font-size: 2.5em;
+    color: #d5006d;
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffb6c1, #d5006d, #ffb6c1);
+    border-radius: 2px;
+}
+
+/* Carousel */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-item {
+    min-width: 25%;
+    padding: 15px;
+}
+
+.card {
+    background: linear-gradient(145deg, #ffffff, #ffe0ec);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    transition: all 0.4s ease;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(213, 0, 109, 0.4);
+}
+
+.card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover img {
+    transform: scale(1.1);
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card-content p {
+    font-size: 1.05em;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #d5006d, #ff6b9d);
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.8em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(213, 0, 109, 0.4);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.nav-btn:hover {
+    background: linear-gradient(135deg, #ff6b9d, #d5006d);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 12px 30px rgba(213, 0, 109, 0.6);
+}
+
+.prev-btn {
+    left: -20px;
+}
+
+.next-btn {
+    right: -20px;
+}
+
+/* Dots Indicator */
+.dots-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffb6c1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #d5006d;
+    width: 30px;
+    border-radius: 6px;
+}
+
+/* Features Section */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.feature-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2);
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(213, 0, 109, 0.3);
+}
+
+.feature-icon {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    color: #d5006d;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    color: #666;
+    font-size: 1.05em;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #d5006d, #8b0045);
+    color: white;
+    padding: 60px 20px 30px;
+    margin-top: 80px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content {
+    margin-bottom: 30px;
+}
+
+.footer-content p {
+    font-size: 1.1em;
+    margin: 10px 0;
+    color: #ffe0ec;
+}
+
+.footer-content a {
+    color: #ffb6c1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 182, 193, 0.3);
+    padding-top: 20px;
+    margin-top: 30px;
+}
+
+.footer-bottom p {
+    color: #ffb6c1;
+    font-size: 0.95em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2em;
+    }
+    
+    .carousel-item {
+        min-width: 100%;
+    }
+    
+    .nav-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3em;
+    }
+    
+    .features {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>✨ Chào Mừng Bạn Đến Với XYNH Cosmetic ✨</h1>
+    <p>Chúng tôi tin rằng mỗi người phụ nữ đều xứng đáng có được vẻ đẹp tự nhiên và tinh tế. XYNH Cosmetic ra đời với sứ mệnh mang đến cho bạn những sản phẩm chăm sóc sắc đẹp tuyệt vời nhất, giúp bạn tự tin tỏa sáng từ bên trong ra ngoài.</p>
+</div>
+
+<div class="container">
+    <!-- Carousel Section -->
+    <div class="carousel-section">
+        <h2 class="section-title">🌸 Câu Chuyện Của Chúng Tôi 🌸</h2>
+        
+        <div class="carousel-container">
+            <div class="carousel" id="carousel">
+                <div class="carousel-item">
+                    <div class="card">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23ffb6c1' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23d5006d' text-anchor='middle' dominant-baseline='middle'%3ETự Nhiên%3C/text%3E%3C/svg%3E" alt="Thiên nhiên">
+                        <div class="card-content">
+                            <p>XYNH Cosmetic đặc biệt vì sản phẩm của chúng tôi được chiết xuất từ thiên nhiên, an toàn cho làn da và mang lại hiệu quả vượt trội, đồng thời luôn chú trọng vào sự tận tâm và chăm sóc khách hàng.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="card">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23ffe0ec' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23d5006d' text-anchor='middle' dominant-baseline='middle'%3ESứ Mệnh%3C/text%3E%3C/svg%3E" alt="Đặc biệt">
+                        <div class="card-content">
+                            <p>Sứ mệnh của chúng tôi là cung cấp các sản phẩm mỹ phẩm thiên nhiên, giúp khách hàng tự tin tỏa sáng với vẻ đẹp tự nhiên và phong cách tinh tế.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="card">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23ffc0cb' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23d5006d' text-anchor='middle' dominant-baseline='middle'%3EChất Lượng%3C/text%3E%3C/svg%3E" alt="Chúng tôi">
+                        <div class="card-content">
+                            <p>Khi đến với chúng tôi, bạn sẽ nhận được sản phẩm chất lượng, dịch vụ chăm sóc tận tâm và cảm giác tự tin với vẻ đẹp tự nhiên.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="card">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23ffb6d9' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23d5006d' text-anchor='middle' dominant-baseline='middle'%3ETầm Nhìn%3C/text%3E%3C/svg%3E" alt="Sứ mệnh">
+                        <div class="card-content">
+                            <p>Tầm nhìn của chúng tôi là trở thành thương hiệu mỹ phẩm hàng đầu, kết nối cộng đồng và truyền cảm hứng cho phụ nữ sống trọn vẹn với vẻ đẹp tự nhiên.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="nav-btn prev-btn" onclick="prevSlide()">‹</button>
+            <button class="nav-btn next-btn" onclick="nextSlide()">›</button>
+        </div>
+        
+        <div class="dots-container" id="dots"></div>
+    </div>
+    
+    <!-- Features Section -->
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🌿</div>
+            <h3>100% Thiên Nhiên</h3>
+            <p>Chiết xuất từ các thành phần tự nhiên, an toàn và lành tính cho mọi loại da</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <h3>Hiệu Quả Rõ Rệt</h3>
+            <p>Công thức được nghiên cứu kỹ lưỡng mang lại kết quả vượt trội</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">💝</div>
+            <h3>Tận Tâm Chăm Sóc</h3>
+            <p>Đội ngũ tư vấn chuyên nghiệp, luôn lắng nghe và đồng hành cùng bạn</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <h3>Chất Lượng Đảm Bảo</h3>
+            <p>Sản phẩm được kiểm định nghiêm ngặt, đạt chuẩn quốc tế</p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <p><strong>WEBSITE THUỘC 1250080099_CNTT2</strong></p>
+            <p>📍 Địa chỉ: KÊNH 19/5, P.TÂY THẠNH, TP.HCM</p>
+            <p>📞 Điện thoại: 0968045206 | 📧 Email: <a href="mailto:cntt2@hcmunre.com">cntt2@hcmunre.com</a></p>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 XYNH_HCMUNRE. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+let currentSlide = 0;
+const carousel = document.getElementById('carousel');
+const items = document.querySelectorAll('.carousel-item');
+const totalSlides = items.length;
+const dotsContainer = document.getElementById('dots');
+
+// Create dots
+for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    if (i === 0) dot.classList.add('active');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+}
+
+function updateDots() {
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateCarousel();
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+}
+
+function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const offset = -currentSlide * 25; // 25% for 4 items
+    carousel.style.transform = `translateX(${offset}%)`;
+    updateDots();
+}
+
+// Auto slide
+setInterval(nextSlide, 5000);
+
+// Touch support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+carousel.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+carousel.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) nextSlide();
+    if (touchEndX - touchStartX > 50) prevSlide();
+});
+</script>
+
+</body>
+</html>

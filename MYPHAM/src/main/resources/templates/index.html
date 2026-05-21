@@ -1,0 +1,117 @@
+    <!DOCTYPE html>
+    <html lang="vi" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="XYNH COSMETIC - Chăm sóc sắc đẹp cho bạn">
+    <meta name="author" content="XYNH COSMETIC">
+    <meta property="og:title" content="XYNH COSMETIC - Chăm sóc sắc đẹp">
+    <meta property="og:description" content="Khám phá những sản phẩm chăm sóc sắc đẹp dành riêng cho bạn.">
+    <meta property="og:image" content="/anh/logo.png">
+    <meta property="og:url" content="http://www.xynhcosmetic.com">
+    <title>XYNH COSMETIC</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="icon" href="/anh/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+    <!-- Logo -->
+    <header>
+        <div class="logo">
+            <img th:src="@{/anh/logo.png}" alt="XYNH COSMETIC Logo">
+        </div>
+    </header>
+
+    <!-- Video Background -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source th:src="@{/anh/video.mp4}" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ video.
+    </video>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <!-- Menu chính -->
+            <li><a href="/">Trang Chủ</a></li>
+            
+            <!-- Dropdown Danh mục -->
+            <li class="dropdown">
+                <a href="#">Danh mục</a>
+                <div class="dropdown-content">
+                    <div th:each="dm : ${danhMucs}">
+                        <a th:href="@{/sanpham/danhmuc/{maDM}(maDM=${dm.maDM})}" th:text="${dm.tenDM}"></a>
+                    </div>
+                </div>
+            </li>
+            
+            <li><a href="/sanpham/danhsach">Sản phẩm</a></li>
+            <li><a href="/gioithieu">Giới thiệu</a></li>
+            <li><a href="/lienhe">Liên hệ</a></li>
+            
+            <!-- Đơn hàng (chỉ hiển thị khi đã đăng nhập) -->
+            <li th:if="${user != null}">
+                <a th:href="@{/donhang/my-orders(userId=${user.id})}" class="donhang-link" th:attr="data-count=${orderCount != null ? orderCount : 0}">
+                    <i class="fas fa-box"></i> Đơn hàng
+                </a>
+            </li>
+            
+            <!-- Giỏ hàng -->
+            <li>
+                <a href="/giohang" class="cart-icon">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span th:text="${cartCount != null ? cartCount : 0}">0</span>
+                </a>
+            </li>
+            
+            <!-- Nếu đã đăng nhập -->
+            <div th:if="${user != null}" th:data-user-id="${user.id}">
+                <img th:src="@{${user.anhDaiDien} != null ? '/anh/' + ${user.anhDaiDien} : '/anh/macdinh.png'}" class="user-avatar" alt="Avatar" th:title="${user.tenDangNhap}">
+                <p>Chào, <span th:text="${user.tenDangNhap}">User</span></p>
+                <a href="/logout" class="btn-logout">Đăng xuất</a>
+            </div>
+            
+            <!-- Nếu chưa đăng nhập -->
+            <div th:if="${user == null}">
+                <a href="/auth" class="btn-login">Đăng nhập</a>
+            </div>
+            
+            <!-- Quản lý (chỉ admin) -->
+<li th:if="${session.user != null and session.vaiTro == 'ADMIN'}">
+    <a th:href="@{/admin/donhang}" class="nav-link">
+        <i class="fas fa-cog"></i> Quản Lý
+    </a>
+</li>
+
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Vẻ Đẹp Tự Nhiên<br>Phong Cách Tinh Tế</h1>
+            <p>Khám phá những sản phẩm chăm sóc da cao cấp dành riêng cho bạn.</p>
+            <a href="/sanpham/danhsach" class="btn">Khám phá ngay</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-item">
+                <p>WEBSITE THUỘC 1250080099_CNTT2</p>
+                <p>Địa chỉ: KÊNH 19/5, P.TÂY THẠNH, TP.HCM</p>
+                <p>Điện thoại: 0968045206 | Email: <a href="mailto:cntt2@hcmunre.com">cntt2@hcmunre.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 XYNH_HCMUNRE. All rights reserved.</p>
+        </div>
+    </footer>
+    </body>
+    </html>

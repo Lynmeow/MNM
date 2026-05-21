@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+
+    <link rel="stylesheet" th:href="@{/css/giohang.css}">
+    <link rel="icon" href="/anh/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+
+
+<!-- Bỏ phần video và thay thế bằng hình ảnh nền -->
+<div class="overlay"></div>
+
+<nav class="navbar">
+    <ul>
+        <li><a href="/">Trang Chủ</a></li>
+        <li><a href="/sanpham/danhsach">Sản phẩm</a></li>
+        <li><a href="/gioithieu">Giới thiệu</a></li>
+        <li><a href="/lienhe">Liên hệ</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Giỏ hàng của bạn</h1>
+        <p>Quản lý sản phẩm đã chọn và thanh toán dễ dàng.</p>
+    </div>
+</section>
+
+<!-- ===================== BẢNG GIỎ HÀNG ===================== -->
+<section style="background:white; padding:40px; width:80%; margin:40px auto; border-radius:12px;">
+    <table border="1" cellpadding="10" cellspacing="0" style="width:100%; background:white;">
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Hành động</th>
+        </tr>
+        <tr th:each="ct : ${giohang}">
+            <td th:text="${ct.sanPham.tenSP}"></td>
+            <td>
+                <form th:action="@{/giohang/sua}" method="post" class="qty-form">
+                    <input type="hidden" name="id" th:value="${ct.id}">
+                    <input type="number" min="1" name="soLuong" th:value="${ct.soLuong}">
+                    <button type="submit">Cập nhật</button>
+                </form>
+            </td>
+            <td th:text="${ct.sanPham.gia * ct.soLuong}"></td>
+            <td>
+                <form th:action="@{/giohang/xoa/{id}(id=${ct.id})}" method="post">
+                    <button class="btn-delete">Xóa</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <h3 style="margin-top:20px;">
+        Tổng tiền: <span th:text="${tongTien}"></span>₫
+    </h3>
+
+    <a href="/thanhtoan">
+        <button style="padding:10px 20px; margin-top:20px;">Thanh toán</button>
+    </a>
+</section>
+
+</body>
+</html>

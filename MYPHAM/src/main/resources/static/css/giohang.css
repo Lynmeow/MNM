@@ -1,0 +1,198 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+}
+
+/* ===================== HEADER ===================== */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0;
+ /* Nền bán trong suốt cho header */
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* ===================== NAVBAR ===================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Nền navbar trong suốt */
+    padding: 20px 0;
+    z-index: 99;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 40px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: #ff99b6;
+    text-shadow: 0 0 8px #ff99b6;
+}
+
+/* ===================== HERO ===================== */
+.hero {
+    height: 250px;
+    background-color: #ffb6c1;
+    background-image: url('/anh/your-image.jpg'); /* Thay thế bằng hình ảnh nền của bạn */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1.2em;
+}
+
+/* ===================== GIỎ HÀNG ===================== */
+section {
+    background-color: white;
+    padding: 40px;
+    width: 80%;
+    margin: 100px auto;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: #fafafa;
+}
+
+/* Cập nhật số lượng */
+.qty-form input {
+    width: 50px;
+    padding: 5px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.qty-form button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.qty-form button:hover {
+    background-color: #ff99b6;
+}
+
+/* Nút Xóa */
+.btn-delete {
+    background-color: #ff4081;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #ff99b6;
+}
+
+/* Tổng tiền */
+h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Nút Thanh toán */
+a button {
+    padding: 10px 20px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.1em;
+    width: 100%;
+    margin-top: 20px;
+}
+
+a button:hover {
+    background-color: #ff99b6;
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 768px) {
+    .navbar ul {
+        gap: 15px;
+    }
+
+    .hero h1 {
+        font-size: 2em;
+    }
+
+    .hero p {
+        font-size: 1em;
+    }
+
+    section {
+        width: 90%;
+        padding: 20px;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+}

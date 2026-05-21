@@ -1,0 +1,538 @@
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe8ed 100%);
+    color: #333;
+}
+
+/* ===================== NAVBAR ===================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(255, 182, 193, 0.98) 0%, rgba(255, 192, 203, 0.98) 100%);
+    padding: 20px 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(255, 105, 135, 0.25);
+    backdrop-filter: blur(10px);
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 10px 18px;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.navbar a:hover::after,
+.navbar a.active::after {
+    width: 80%;
+}
+
+.navbar a:hover {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+}
+
+/* ===================== CONTAINER CHÍNH ===================== */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 20px 60px;
+}
+
+/* ===================== THÔNG TIN LIÊN HỆ ===================== */
+.contact-info {
+    background: linear-gradient(135deg, #ffffff 0%, #fff0f5 100%);
+    border-radius: 20px;
+    padding: 50px 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 40px rgba(255, 105, 135, 0.15);
+    border: 2px solid rgba(255, 182, 193, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 182, 193, 0.1) 0%, transparent 70%);
+    animation: float 15s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, -20px) rotate(180deg); }
+}
+
+.contact-info h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    position: relative;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    position: relative;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 182, 193, 0.2);
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 105, 135, 0.2);
+    border-color: rgba(255, 182, 193, 0.5);
+}
+
+.icon-wrapper {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+.icon-wrapper i {
+    color: #fff;
+    font-size: 1.4em;
+}
+
+.info-content h3 {
+    color: #FF69B4;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.info-content p {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+/* ===================== FORM LIÊN HỆ ===================== */
+.contact-form {
+    background: linear-gradient(135deg, #ffffff 0%, #fff0f5 100%);
+    padding: 50px 45px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(255, 105, 135, 0.15);
+    border: 2px solid rgba(255, 182, 193, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #FFB6C1, #FFD1DC, #FFC0CB, #FFB6C1);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.3s ease;
+}
+
+.contact-form:hover::before {
+    opacity: 0.4;
+}
+
+.contact-form h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.form-subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 1.05em;
+    margin-bottom: 35px;
+    font-style: italic;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form label {
+    font-size: 1em;
+    color: #555;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact-form label i {
+    color: #FFB6C1;
+    font-size: 1.1em;
+}
+
+.required {
+    color: #FF69B4;
+    font-weight: bold;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    padding: 15px 20px;
+    font-size: 1em;
+    border: 2px solid #FFD1DC;
+    border-radius: 12px;
+    width: 100%;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.contact-form input:focus, 
+.contact-form textarea:focus {
+    border-color: #FFB6C1;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 182, 193, 0.15);
+    transform: translateY(-2px);
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #FFB6C1;
+    opacity: 0.7;
+}
+
+/* ===================== BUTTONS ===================== */
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-submit,
+.btn-call {
+    flex: 1;
+    min-width: 200px;
+    padding: 16px 35px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+    color: white;
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.35);
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.45);
+}
+
+.btn-call {
+    background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+    color: #FF69B4;
+    border: 2px solid #FFB6C1;
+    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.2);
+}
+
+.btn-call:hover {
+    background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%);
+    color: white;
+    border-color: #FF69B4;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+}
+
+.btn-submit:active,
+.btn-call:active {
+    transform: translateY(-1px);
+}
+
+/* ===================== FOOTER ===================== */
+.footer {
+    background: linear-gradient(135deg, #4a4a4a 0%, #2c2c2c 100%);
+    color: white;
+    padding: 50px 40px 20px;
+    margin-top: 60px;
+    box-shadow: 0 -5px 20px rgba(255, 105, 135, 0.1);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    color: #FFB6C1;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.footer-section h4 {
+    color: #FFD1DC;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #FFB6C1;
+    padding-left: 5px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+.social-icons a:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 182, 193, 0.3);
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95em;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+    .navbar ul {
+        gap: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .navbar a {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .main-container {
+        padding: 100px 15px 40px;
+    }
+
+    .contact-info,
+    .contact-form {
+        padding: 35px 25px;
+    }
+
+    .contact-info h2,
+    .contact-form h2 {
+        font-size: 2em;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .btn-submit,
+    .btn-call {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar ul {
+        gap: 15px;
+    }
+
+    .navbar a {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .contact-info h2,
+    .contact-form h2 {
+        font-size: 1.6em;
+    }
+
+    .info-item {
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .icon-wrapper {
+        width: 45px;
+        height: 45px;
+    }
+
+    .icon-wrapper i {
+        font-size: 1.2em;
+    }
+
+    .contact-form input, 
+    .contact-form textarea {
+        font-size: 0.95em;
+        padding: 13px 16px;
+    }
+
+    .btn-submit,
+    .btn-call {
+        font-size: 1em;
+        padding: 14px 28px;
+    }
+}

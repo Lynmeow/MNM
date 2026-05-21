@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo đơn hàng</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #ff69b4;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .product-section {
+            border: 2px solid #ff69b4;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #fff5f8;
+        }
+        
+        .product-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 80px;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            align-items: end;
+        }
+        
+        .product-item select,
+        .product-item input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .btn-add-product {
+            background: #ff69b4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn-remove {
+            background: #ff4444;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .total-section {
+            background: #fff5f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: right;
+        }
+        
+        .total-section h3 {
+            color: #ff69b4;
+            font-size: 24px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .btn-submit {
+            background: #ff69b4;
+            color: white;
+        }
+        
+        .btn-cancel {
+            background: #ccc;
+            color: #333;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📦 Tạo đơn hàng cho khách</h2>
+        
+        <!-- Hiển thị lỗi nếu có -->
+        <div th:if="${error}" style="
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c62828;
+        ">
+            <strong>⚠️ Lỗi:</strong> <span th:text="${error}"></span>
+        </div>
+        
+        <form action="/admin/donhang/add" method="post" id="orderForm">
+            <!-- Thông tin khách hàng -->
+            <div class="form-group">
+                <label>User ID</label>
+                <input type="number" name="userId" value="1" min="1" placeholder="Nhập ID user">
+                <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">
+                    💡 Mặc định: 1 (Khách vãng lai). Nhập ID khác nếu khách đã có tài khoản.
+                </small>
+            </div>
+            
+            <div class="form-group">
+                <label>Địa chỉ giao hàng *</label>
+                <textarea name="diaChi" required placeholder="Nhập địa chỉ đầy đủ"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Phương thức thanh toán *</label>
+                <select name="phuongThucThanhToan" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                    <option value="">-- Chọn phương thức --</option>
+                    <option value="COD">COD (Thanh toán khi nhận hàng)</option>
+                    <option value="BANKING">Chuyển khoản ngân hàng</option>
+                    <option value="MOMO">Ví MoMo</option>
+                    <option value="VNPAY">VNPay</option>
+                </select>
+            </div>
+            
+            <!-- Chọn sản phẩm -->
+            <div class="product-section">
+                <h3 style="color: #ff69b4; margin-bottom: 15px;">Chọn sản phẩm</h3>
+                <div id="productList">
+                    <div class="product-item">
+                        <div>
+                            <label>Sản phẩm</label>
+                            <select name="maSanPham" class="product-select" required onchange="updateTotal()">
+                                <option value="">-- Chọn sản phẩm --</option>
+                                <option th:each="sp : ${sanPhams}" 
+                                        th:value="${sp.maSP}" 
+                                        th:text="${sp.tenSP + ' - ' + #numbers.formatDecimal(sp.gia, 0, 'COMMA', 0, 'POINT') + ' đ'}"
+                                        th:data-price="${sp.gia}"></option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Số lượng</label>
+                            <input type="number" name="soLuong" class="quantity-input" min="1" value="1" required onchange="updateTotal()">
+                        </div>
+                        <div>
+                            <label>&nbsp;</label>
+                            <button type="button" class="btn-remove" onclick="removeProduct(this)" style="display:none;">Xóa</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-add-product" onclick="addProduct()">+ Thêm sản phẩm</button>
+            </div>
+            
+            <!-- Tổng tiền -->
+            <div class="total-section">
+                <h3>Tổng tiền: <span id="totalPrice">0</span> đ</h3>
+            </div>
+            
+            <!-- Nút submit -->
+            <div class="btn-group">
+                <button type="submit" class="btn btn-submit">✓ Tạo đơn hàng</button>
+                <a href="/admin/donhang" class="btn btn-cancel">✕ Hủy</a>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Format số tiền
+        function formatMoney(num) {
+            return new Intl.NumberFormat('vi-VN').format(num);
+        }
+        
+        // Tính tổng tiền
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('.product-item').forEach(item => {
+                const select = item.querySelector('.product-select');
+                const quantity = item.querySelector('.quantity-input');
+                
+                if (select && select.value && quantity && quantity.value) {
+                    const option = select.options[select.selectedIndex];
+                    const price = parseFloat(option.dataset.price || 0);
+                    const qty = parseInt(quantity.value || 0);
+                    total += price * qty;
+                }
+            });
+            
+            document.getElementById('totalPrice').textContent = formatMoney(total);
+        }
+        
+        // Thêm sản phẩm mới
+        function addProduct() {
+            const productList = document.getElementById('productList');
+            const firstItem = productList.querySelector('.product-item');
+            const newItem = firstItem.cloneNode(true);
+            
+            // Reset giá trị
+            newItem.querySelector('.product-select').value = '';
+            newItem.querySelector('.quantity-input').value = 1;
+            newItem.querySelector('.btn-remove').style.display = 'block';
+            
+            productList.appendChild(newItem);
+            updateTotal();
+        }
+        
+        // Xóa sản phẩm
+        function removeProduct(btn) {
+            btn.closest('.product-item').remove();
+            updateTotal();
+        }
+        
+        // Validate form trước khi submit
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            const diaChi = document.querySelector('textarea[name="diaChi"]').value;
+            const phuongThuc = document.querySelector('select[name="phuongThucThanhToan"]').value;
+
+            if (!diaChi || !diaChi.trim()) {
+                e.preventDefault();
+                alert('Vui lòng nhập địa chỉ giao hàng!');
+                return false;
+            }
+
+            if (!phuongThuc) {
+                e.preventDefault();
+                alert('Vui lòng chọn phương thức thanh toán!');
+                return false;
+            }
+
+            const products = document.querySelectorAll('.product-select');
+            let hasProduct = false;
+            products.forEach(select => { if (select.value) hasProduct = true; });
+
+            if (!hasProduct) {
+                e.preventDefault();
+                alert('Vui lòng chọn ít nhất 1 sản phẩm!');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
